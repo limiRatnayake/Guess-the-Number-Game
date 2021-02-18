@@ -11,6 +11,7 @@ let guessCount = 1;
 let resetButton;
 
 function checkGuess() {
+   //build constructor Number
    let userGuess = Number(guessField.value);
    if (guessCount === 1) {
       guesses.textContent = "Previous guesses: ";
@@ -40,4 +41,31 @@ function checkGuess() {
    guessField.focus();
 }
 
-checkGuess();
+function resetGame() {
+   guessCount = 1;
+
+   let resultPara = document.querySelectorAll(".resultParas p");
+   for (let i = 0; i < lastResult.length; i++) {
+      resetParas[i].textContent = "";
+   }
+
+   resetButton.parentNode.removeChild(resetButton);
+
+   guessField.disabled = false;
+   guessSubmit.disabled = false;
+   guessField.value = "";
+   guessField.focus();
+   lastResult.style.backgroundColor = "white";
+   randomNumber = Math.floor(Math.random() * 100) + 1;
+}
+
+function setGameOver() {
+   guessField.disabled = true;
+   guessSubmit.disabled = true;
+   resetButton = document.createElement("button");
+   resetButton.textContent = "Start new game";
+   document.body.append(resetButton);
+   resetButton.addEventListener("click", resetGame);
+   guesses.textContent = " ";
+}
+guessSubmit.addEventListener("click", checkGuess);
